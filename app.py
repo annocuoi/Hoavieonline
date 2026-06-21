@@ -477,8 +477,8 @@ if "GITHUB_TOKEN" in st.secrets:
 else:
     GITHUB_TOKEN = ""
 
-REPO_NAME = "annocuoi/quan-ly-hoa-vien"
-FILE_PATH = "du_lieu_hoi_do_kiep.json"
+REPO_NAME = "annocuoi/Hoavienoline"
+FILE_PATH = "du_lieu_hoa"
 BRANCH = "main"
 
 HEADERS = {
