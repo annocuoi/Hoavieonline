@@ -459,7 +459,7 @@ def sap_xep_hoa(ds_hoa):
 MAT_KHAU_HE_THONG = "111111"
 TAI_KHOAN_MAC_DINH = {
     "admin": {
-        "pass": "111111",
+        "pass": "13051998",
         "quyen": "admin"
     }
 }
