@@ -589,19 +589,11 @@ if "tai_khoan" not in st.session_state:
         "tai_khoan",
         {}
     )
-
-
 if "admin" not in st.session_state.tai_khoan:
-
     st.session_state.tai_khoan["admin"] = {
         "pass": "111111",
         "quyen": "admin"
     }
-
-    luu_du_lieu_len_github()
-
-
-TAI_KHOAN = st.session_state.tai_khoan
 
 
 if not st.session_state.da_dang_nhap:
@@ -621,21 +613,21 @@ if not st.session_state.da_dang_nhap:
     if st.button("🔐 Đăng Nhập", use_container_width=True):
 
         if (
-            ten_dang_nhap in TAI_KHOAN
-            and mat_khau_nhap == TAI_KHOAN[ten_dang_nhap].get("pass")
+            ten_dang_nhap in st.session_state.tai_khoan
+            and mat_khau_nhap == st.session_state.tai_khoan[ten_dang_nhap]["pass"]
         ):
 
             st.session_state.da_dang_nhap = True
             st.session_state.ten_tai_khoan = ten_dang_nhap
-            st.session_state.quyen = TAI_KHOAN[ten_dang_nhap]["quyen"]
+            st.session_state.quyen = st.session_state.tai_khoan[ten_dang_nhap]["quyen"]
 
             st.rerun()
 
         else:
             st.error("Sai tài khoản hoặc mật khẩu")
 
-
     st.stop()
+
 
 
 TAI_KHOAN = st.session_state.tai_khoan
