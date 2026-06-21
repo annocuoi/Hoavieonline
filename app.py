@@ -727,9 +727,10 @@ if st.session_state.quyen == "admin":
 
 else:
 
-    tab_suu_tap, tab_xep_hang, tab_thong_tin = st.tabs(
+    tab_suu_tap, tab_hoi_vien, tab_xep_hang, tab_thong_tin = st.tabs(
         [
-            "🌺 Bộ sưu tập",
+            "🌸 Bộ sưu tập",
+            "👥 Hội viên",
             "🏆 Xếp hạng",
             "ℹ️ Thông tin"
         ]
