@@ -1149,8 +1149,8 @@ if st.session_state.quyen != "admin":
                     use_container_width=True
                 ):
 
-                    if tv_chon == "-- Chọn --":
-                        st.warning("⚠️ Vui lòng chọn hội viên trước")
+                    if not tv_chon or tv_chon == "-- Chọn --":
+                        st.warning("⚠️ Vui lòng tạo hoặc chọn hội viên trước")
 
                     elif hoa_chon == "-- Chọn hoa --":
                         st.warning("⚠️ Vui lòng chọn hoa")
