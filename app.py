@@ -487,12 +487,6 @@ API_URL = f"https://api.github.com/repos/{REPO_NAME}/contents/{FILE_PATH}"
 # ====================================================
 if "da_dang_nhap" not in st.session_state:
     st.session_state.da_dang_nhap = False
-du_lieu_login = tai_du_lieu_tu_github()
-
-TAI_KHOAN = du_lieu_login.get(
-    "tai_khoan",
-    TAI_KHOAN_MAC_DINH
-)    
 
 if not st.session_state.da_dang_nhap:
     st.markdown("<h2 style='text-align: center; color: #60A5FA; font-size: 24px;'>🔒 HỆ THỐNG BẢO MẬT</h2>", unsafe_allow_html=True)
@@ -558,6 +552,12 @@ def tai_du_lieu_tu_github():
     except Exception as e:
         st.sidebar.warning(f"Đang kết nối đám mây... ({str(e)})")
     return mac_dinh
+du_lieu_login = tai_du_lieu_tu_github()
+
+TAI_KHOAN = du_lieu_login.get(
+    "tai_khoan",
+    TAI_KHOAN_MAC_DINH
+)
 
 # ----------------------------------------------------
 # 💾 HÀM GHI DỮ LIỆU LÊN GITHUB
