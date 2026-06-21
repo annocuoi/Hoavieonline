@@ -478,7 +478,7 @@ else:
     GITHUB_TOKEN = ""
 
 REPO_NAME = "annocuoi/Hoa-vien-online"
-FILE_PATH = "du_lieu_hoa.json"
+FILE_PATH = "du_lieu_hoa1.json"
 BRANCH = "main"
 
 HEADERS = {
