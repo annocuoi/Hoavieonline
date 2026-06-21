@@ -456,15 +456,10 @@ def sap_xep_hoa(ds_hoa):
 # ⚙️ CẤU HÌNH HỆ THỐNG (ĐỌC TOKEN TỪ SECRETS AN TOÀN)
 # ====================================================
 MAT_KHAU_HE_THONG = "111111"
-TAI_KHOAN = {
+TAI_KHOAN_MAC_DINH = {
     "admin": {
         "pass": "111111",
         "quyen": "admin"
-    },
-
-    "khach": {
-        "pass": "123456",
-        "quyen": "user"
     }
 }
 
@@ -492,6 +487,12 @@ API_URL = f"https://api.github.com/repos/{REPO_NAME}/contents/{FILE_PATH}"
 # ====================================================
 if "da_dang_nhap" not in st.session_state:
     st.session_state.da_dang_nhap = False
+du_lieu_login = tai_du_lieu_tu_github()
+
+TAI_KHOAN = du_lieu_login.get(
+    "tai_khoan",
+    TAI_KHOAN_MAC_DINH
+)    
 
 if not st.session_state.da_dang_nhap:
     st.markdown("<h2 style='text-align: center; color: #60A5FA; font-size: 24px;'>🔒 HỆ THỐNG BẢO MẬT</h2>", unsafe_allow_html=True)
