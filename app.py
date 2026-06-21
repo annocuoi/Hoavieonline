@@ -24,6 +24,33 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    /* Ẩn toàn bộ toolbar góc phải dưới Streamlit */
+[data-testid="stToolbar"] {
+    display: none !important;
+}
+
+/* Ẩn status widget góc phải dưới */
+[data-testid="stStatusWidget"] {
+    display: none !important;
+}
+
+/* Ẩn nút feedback / avatar */
+[data-testid="stDecoration"] {
+    display: none !important;
+}
+
+/* Ẩn footer + menu */
+footer {
+    display: none !important;
+}
+
+#MainMenu {
+    display: none !important;
+}
+
+header {
+    display: none !important;
+}
     /* Ẩn thanh toolbar Streamlit trên cùng */
     [data-testid="stToolbar"] {
         display: none;
