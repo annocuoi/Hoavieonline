@@ -598,6 +598,8 @@ if "admin" not in st.session_state.tai_khoan:
         "quyen": "admin"
     }
 
+    luu_du_lieu_len_github()
+
 
 TAI_KHOAN = st.session_state.tai_khoan
 
