@@ -714,13 +714,9 @@ danh_sach_tv = list(du_lieu_hoi_dang_dung.keys())
 
 if st.session_state.quyen == "admin":
 
-    tab_suu_tap, tab_hoi_vien, tab_xep_hang, tab_kho, tab_thong_tin, tab_khach = st.tabs(
+    tab_kho, tab_khach = st.tabs(
         [
-            "🌺 Bộ sưu tập",
-            "👥 Hội viên",
-            "🏆 Xếp hạng",
             "📦 Kho",
-            "ℹ️ Thông tin",
             "👥 Khách hàng"
         ]
     )
