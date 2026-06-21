@@ -490,12 +490,14 @@ if "da_dang_nhap" not in st.session_state:
 
 # lấy tài khoản đăng nhập
 if "tai_khoan" not in st.session_state:
-    du_lieu_login = tai_du_lieu_tu_github()
-
-    st.session_state.tai_khoan = du_lieu_login.get(
-        "tai_khoan",
-        TAI_KHOAN_MAC_DINH
-    )
+    TAI_KHOAN_MAC_DINH = {
+        "admin": {
+            "pass": "111111",
+            "quyen": "admin"
+        }
+    }
+TAI_KHOAN = TAI_KHOAN_MAC_DINH
+    
 
 TAI_KHOAN = st.session_state.tai_khoan    
 
