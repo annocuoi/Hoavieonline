@@ -579,9 +579,12 @@ def luu_du_lieu_len_github():
                 "cap": info["cap"],
                 "anh": anh_str
             }
-            
+
         data_to_save = {
             "kho_hoa_tong": kho_tong_copy,
+
+            "tai_khoan": st.session_state.tai_khoan,
+
             "du_lieu_thanh_vien": st.session_state.du_lieu_thanh_vien
         }
         
@@ -610,9 +613,23 @@ def luu_du_lieu_len_github():
 
 # Khởi tạo nạp dữ liệu
 if "kho_hoa_tong" not in st.session_state or "du_lieu_thanh_vien" not in st.session_state:
+
     du_lieu_goc = tai_du_lieu_tu_github()
-    st.session_state.kho_hoa_tong = du_lieu_goc.get("kho_hoa_tong", {})
-    st.session_state.du_lieu_thanh_vien = du_lieu_goc.get("du_lieu_thanh_vien", {})
+
+    st.session_state.kho_hoa_tong = du_lieu_goc.get(
+        "kho_hoa_tong",
+        {}
+    )
+
+    st.session_state.du_lieu_thanh_vien = du_lieu_goc.get(
+        "du_lieu_thanh_vien",
+        {}
+    )
+
+    st.session_state.tai_khoan = du_lieu_goc.get(
+        "tai_khoan",
+        TAI_KHOAN_MAC_DINH
+    )
 
 st.markdown(
 """
@@ -1003,6 +1020,73 @@ if st.session_state.quyen == "admin":
                             st.rerun()
         
         st.write("---")
+# ==================================================
+# 👥 QUẢN LÝ TÀI KHOẢN KHÁCH
+# ==================================================
+
+if st.session_state.quyen == "admin":
+
+    st.markdown("### 👥 Quản lý tài khoản khách")
+
+    ten_moi = st.text_input(
+        "Tên tài khoản khách",
+        key="tao_user"
+    )
+
+    mat_khau_moi = st.text_input(
+        "Mật khẩu",
+        key="tao_pass"
+    )
+
+    if st.button("➕ Tạo tài khoản khách"):
+
+        if ten_moi.strip() == "" or mat_khau_moi.strip() == "":
+            st.warning("Nhập đủ tài khoản và mật khẩu")
+
+        elif ten_moi in st.session_state.tai_khoan:
+            st.error("Tài khoản đã tồn tại")
+
+        else:
+            st.session_state.tai_khoan[ten_moi] = {
+                "pass": mat_khau_moi,
+                "quyen": "user"
+            }
+
+            # tạo kho dữ liệu riêng cho hội này
+            if ten_moi not in st.session_state.du_lieu_thanh_vien:
+                st.session_state.du_lieu_thanh_vien[ten_moi] = {}
+
+            luu_du_lieu_len_github()
+
+            st.success("Đã tạo tài khoản khách")
+            st.rerun()
+
+
+    st.markdown("### 📋 Danh sách khách")
+
+    for tk, info in st.session_state.tai_khoan.items():
+
+        if tk != "admin":
+
+            c1, c2 = st.columns([3,1])
+
+            with c1:
+                st.write("👤", tk)
+
+            with c2:
+                if st.button(
+                    "🗑",
+                    key=f"xoa_{tk}"
+                ):
+                    del st.session_state.tai_khoan[tk]
+
+                    if tk in st.session_state.du_lieu_thanh_vien:
+                        del st.session_state.du_lieu_thanh_vien[tk]
+
+                    luu_du_lieu_len_github()
+
+                    st.rerun()
+
 
 # ====================================================
 # KHU VỰC 2: CẤU HÌNH THÀNH VIÊN VÀ CẤP PHÁT
