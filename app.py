@@ -497,8 +497,6 @@ if "tai_khoan" not in st.session_state:
             "quyen": "admin"
         }
     }
-if "tai_khoan" not in st.session_state:
-    st.session_state.tai_khoan = TAI_KHOAN_MAC_DINH
 
 TAI_KHOAN = st.session_state.tai_khoan
     
@@ -643,7 +641,11 @@ def luu_du_lieu_len_github():
         return False
 
 # Khởi tạo nạp dữ liệu
-if "kho_hoa_tong" not in st.session_state or "du_lieu_thanh_vien" not in st.session_state:
+# ==========================
+# KHỞI TẠO DỮ LIỆU
+# ==========================
+
+if "da_load_data" not in st.session_state:
 
     du_lieu_goc = tai_du_lieu_tu_github()
 
@@ -661,6 +663,8 @@ if "kho_hoa_tong" not in st.session_state or "du_lieu_thanh_vien" not in st.sess
         "tai_khoan",
         TAI_KHOAN_MAC_DINH.copy()
     )
+
+    st.session_state.da_load_data = True
 
 st.markdown(
 """
