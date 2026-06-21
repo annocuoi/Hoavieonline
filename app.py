@@ -1165,138 +1165,139 @@ if st.session_state.quyen != "admin":
             else:
 
                 st.info("✅ Hội viên đã có tất cả hoa")
-with tab_xep_hang:
+if st.session_state.quyen != "admin":
+    with tab_xep_hang:
 
-    st.markdown(
-        """
-    <div style="text-align:center;white-space:nowrap;margin-bottom:15px;">
-    <div style="font-size:40px;line-height:1;">🏆</div>
-    <div style="font-size:22px;font-weight:700;">Bảng Xếp Hạng Hội Viên</div>
-    </div>
-        """,
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            """
+        <div style="text-align:center;white-space:nowrap;margin-bottom:15px;">
+        <div style="font-size:40px;line-height:1;">🏆</div>
+        <div style="font-size:22px;font-weight:700;">Bảng Xếp Hạng Hội Viên</div>
+        </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    bang_xep_hang = []
+        bang_xep_hang = []
 
-    for ten_tv, ds_hoa in du_lieu_hoi_dang_dung.items():
+        for ten_tv, ds_hoa in du_lieu_hoi_dang_dung.items():
 
-        dem = {
-            "Đỏ":0,
-            "Cam":0,
-            "Tím":0,
-            "Xanh dương":0,
-            "Xanh lá":0
-        }
+            dem = {
+                "Đỏ":0,
+                "Cam":0,
+                "Tím":0,
+                "Xanh dương":0,
+                "Xanh lá":0
+            }
 
-        for hoa in ds_hoa:
-            info = st.session_state.kho_hoa_tong.get(hoa,{})
-            cap = info.get("cap","")
+            for hoa in ds_hoa:
+                info = st.session_state.kho_hoa_tong.get(hoa,{})
+                cap = info.get("cap","")
 
-            if cap in dem:
-                dem[cap] += 1
-
-
-        bang_xep_hang.append({
-            "ten": ten_tv,
-            "tong": len(ds_hoa),
-            "cap": dem
-        })
+                if cap in dem:
+                    dem[cap] += 1
 
 
-    bang_xep_hang = sorted(
-        bang_xep_hang,
-        key=lambda x:x["tong"],
-        reverse=True
-    )
+            bang_xep_hang.append({
+                "ten": ten_tv,
+                "tong": len(ds_hoa),
+                "cap": dem
+            })
 
 
-    hang_xep = [
-        bang_xep_hang[:1]   # top 1
-    ]
-
-    for i in range(1, len(bang_xep_hang), 2):
-        hang_xep.append(
-            bang_xep_hang[i:i+2]
+        bang_xep_hang = sorted(
+            bang_xep_hang,
+            key=lambda x:x["tong"],
+            reverse=True
         )
 
 
-    html = ""
-    so_top = 1
+        hang_xep = [
+            bang_xep_hang[:1]   # top 1
+        ]
+
+        for i in range(1, len(bang_xep_hang), 2):
+            hang_xep.append(
+                bang_xep_hang[i:i+2]
+            )
 
 
-    for hang in hang_xep:
-
-        cot = len(hang)
-
-        html += f"""<div style="
-display:grid;
-grid-template-columns:repeat({cot},150px);
-justify-content:center;
-gap:12px;
-margin-bottom:6px;
-">"""
+        html = ""
+        so_top = 1
 
 
-        for tv in hang:
+        for hang in hang_xep:
 
-            if so_top == 1:
-                cup = "🥇"
-                vien = "#ffd700"
-                do_day_vien = "5px"
-            elif so_top == 2:
-                cup = "🥈"
-                vien = "#c0c0c0"
-                do_day_vien = "4px"
-            elif so_top == 3:
-                cup = "🥉"
-                vien = "#cd7f32"
-                do_day_vien = "4px"
-            else:
-                cup = f"#{so_top}"
-                vien = "white"
-                do_day_vien = "2px"
-
+            cot = len(hang)
 
             html += f"""<div style="
-border:{do_day_vien} solid {vien};
-border-radius:8px;
-width:140px;
-height:140px;
-background:rgba(255,255,255,0.85);
-text-align:center;
-font-size:14px;
-line-height:1.15;
-padding:3px;
-overflow:hidden;
-">
-
-<div style="font-size:12px">{cup}</div>
-
-<b>{tv['ten']}</b><br>
-
-🌺 {tv['tong']}<br>
-
-🔴{tv['cap']['Đỏ']}
-🟠{tv['cap']['Cam']}<br>
-
-🟣{tv['cap']['Tím']}
-🔵{tv['cap']['Xanh dương']}<br>
-
-🟢{tv['cap']['Xanh lá']}
-
-</div>"""
-
-            so_top += 1
+    display:grid;
+    grid-template-columns:repeat({cot},150px);
+    justify-content:center;
+    gap:12px;
+    margin-bottom:6px;
+    ">"""
 
 
-        html += "</div>"
+            for tv in hang:
+
+                if so_top == 1:
+                    cup = "🥇"
+                    vien = "#ffd700"
+                    do_day_vien = "5px"
+                elif so_top == 2:
+                    cup = "🥈"
+                    vien = "#c0c0c0"
+                    do_day_vien = "4px"
+                elif so_top == 3:
+                    cup = "🥉"
+                    vien = "#cd7f32"
+                    do_day_vien = "4px"
+                else:
+                    cup = f"#{so_top}"
+                    vien = "white"
+                    do_day_vien = "2px"
 
 
-    st.markdown(
-        html,
-        unsafe_allow_html=True
-    )
+                html += f"""<div style="
+    border:{do_day_vien} solid {vien};
+    border-radius:8px;
+    width:140px;
+    height:140px;
+    background:rgba(255,255,255,0.85);
+    text-align:center;
+    font-size:14px;
+    line-height:1.15;
+    padding:3px;
+    overflow:hidden;
+    ">
+
+    <div style="font-size:12px">{cup}</div>
+
+    <b>{tv['ten']}</b><br>
+
+    🌺 {tv['tong']}<br>
+
+    🔴{tv['cap']['Đỏ']}
+    🟠{tv['cap']['Cam']}<br>
+
+    🟣{tv['cap']['Tím']}
+    🔵{tv['cap']['Xanh dương']}<br>
+
+    🟢{tv['cap']['Xanh lá']}
+
+    </div>"""
+
+                so_top += 1
+
+
+            html += "</div>"
+
+
+        st.markdown(
+            html,
+            unsafe_allow_html=True
+        )
 # ====================================================
 # KHU VỰC 3: BỘ SƯU TẬP
 # ====================================================
