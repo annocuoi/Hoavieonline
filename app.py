@@ -544,6 +544,18 @@ def tai_du_lieu_tu_github():
         st.sidebar.warning(f"Đang kết nối đám mây... ({str(e)})")
     return mac_dinh
 # ==========================
+# KHỞI TẠO SESSION ĐĂNG NHẬP
+# ==========================
+
+if "da_dang_nhap" not in st.session_state:
+    st.session_state.da_dang_nhap = False
+
+if "ten_tai_khoan" not in st.session_state:
+    st.session_state.ten_tai_khoan = ""
+
+if "quyen" not in st.session_state:
+    st.session_state.quyen = Non
+# ==========================
 # LẤY TÀI KHOẢN ĐĂNG NHẬP
 # ==========================
 
