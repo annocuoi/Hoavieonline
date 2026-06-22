@@ -610,22 +610,7 @@ if not st.session_state.da_dang_nhap:
                     dang_nhap_ok = True
                     quyen_login = "xem"
                     chu_so_huu = ten_hoi
-
-                    break
-
-                tk_xem = data_hoi.get(
-                    "_tai_khoan_xem",
-                    {}
-                )
-
-                if (
-                    ten_dang_nhap == tk_xem.get("user")
-                    and mat_khau_nhap == tk_xem.get("pass")
-                ):
-
-                    dang_nhap_ok = True
-                    quyen_login = "xem"
-                    chu_so_huu = ten_hoi
+                    st.session_state.hoi_dang_xem = ten_hoi
 
                     break
 
@@ -2555,11 +2540,10 @@ if st.session_state.quyen == "hoi":
 
                     du_lieu_hoi_dang_dung["_tai_khoan_xem"]["pass"] = mk_moi
 
-                    ten_file_hoi = (
-                        st.session_state.chu_so_huu
-                        if st.session_state.quyen == "hoi"
-                        else st.session_state.hoi_dang_xem
-                    )
+                    ten_file_hoi = st.session_state.get("chu_so_huu")
+
+                    if ten_file_hoi is None:
+                        ten_file_hoi = st.session_state.get("hoi_dang_xem")
 
                     if luu_du_lieu_hoi(
                         ten_file_hoi,
