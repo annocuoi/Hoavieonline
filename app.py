@@ -526,16 +526,19 @@ def doc_du_lieu_hoi(ten_hoi):
 
             noi_dung = r.json()["content"]
 
-            return json.loads(
-                base64.b64decode(noi_dung)
+            noi_dung = noi_dung.replace("\n", "")
+
+            data = json.loads(
+                base64.b64decode(noi_dung).decode("utf-8")
             )
 
-        else:
+            return data
 
-            return {}
+        return {}
 
+    except Exception as e:
 
-    except:
+        st.write("LỖI ĐỌC HỘ:", e)
 
         return {}
 
