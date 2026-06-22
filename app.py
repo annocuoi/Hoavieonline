@@ -2540,19 +2540,14 @@ if st.session_state.quyen == "hoi":
 
                     du_lieu_hoi_dang_dung["_tai_khoan_xem"]["pass"] = mk_moi
 
-                    ten_file_hoi = st.session_state.get("chu_so_huu")
-
-                    if ten_file_hoi is None:
-                        ten_file_hoi = st.session_state.get("hoi_dang_xem")
-
                     if luu_du_lieu_hoi(
-                        ten_file_hoi,
+                        ten_hoi,
                         du_lieu_hoi_dang_dung
                     ):
 
                         st.session_state.thong_bao_mk = "✅ Đã đổi mật khẩu thành công"
 
-                        st.session_state.mk_xem = ""
+                        st.session_state.mk_xem_moi = ""
 
                         st.rerun()
 
