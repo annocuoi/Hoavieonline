@@ -2163,11 +2163,7 @@ if st.session_state.quyen == "admin":
                 st.session_state.thong_bao_xoa
             )
 
-            time.sleep(3)
-
             del st.session_state.thong_bao_xoa
-
-            st.rerun()
         st.markdown("### 👥 Quản lý tài khoản hội")
         if "reset_tao_hoi" in st.session_state:
             st.session_state.tao_user = ""
@@ -2369,6 +2365,9 @@ if st.session_state.quyen == "admin":
                     st.session_state.thong_bao_xoa = (
                         f"✅ Đã xóa hội {khach_xoa}"
                     )
+
+                    if "xoa_khach" in st.session_state:
+                        del st.session_state.xoa_khach
 
                     st.rerun()
 if st.session_state.quyen == "admin":
