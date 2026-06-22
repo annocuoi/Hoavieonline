@@ -1873,20 +1873,22 @@ if st.session_state.quyen != "admin":
 
             st.markdown("## 🔍 Tra cứu hoa")
 
-            tim_so_huu = st.text_input(
+            ds_tim_so_huu = [
+                "-- Chọn --"
+            ] + list(st.session_state.kho_hoa_tong.keys())
+
+
+            tim_so_huu = st.selectbox(
                 "Nhập tên hoa",
+                ds_tim_so_huu,
                 key="tim_so_huu_tra_cuu"
             )
 
-            if tim_so_huu:
+            if tim_so_huu != "-- Chọn --":
 
-                ds_tim = []
-
-                for ten_hoa in st.session_state.kho_hoa_tong.keys():
-
-                    if tim_so_huu.lower() in ten_hoa.lower():
-                        ds_tim.append(ten_hoa)
-
+                ds_tim = [
+                    tim_so_huu
+                ]
 
                 if ds_tim:
 
