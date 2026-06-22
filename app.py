@@ -1859,6 +1859,7 @@ if st.session_state.quyen == "admin":
 
         if "reset_mk_hoi" in st.session_state:
             st.session_state.mk_hoi_moi = ""
+            st.session_state.doi_pass_hoi = "-- Chọn --"
             del st.session_state.reset_mk_hoi
         mk_hoi_moi = st.text_input(
             "Mật khẩu mới cho hội",
