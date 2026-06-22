@@ -2556,7 +2556,7 @@ if st.session_state.quyen == "hoi":
                     du_lieu_hoi_dang_dung["_tai_khoan_xem"]["pass"] = mk_moi
 
                     if luu_du_lieu_hoi(
-                        hoi,
+                        st.session_state.chu_so_huu
                         du_lieu_hoi_dang_dung
                     ):
 
