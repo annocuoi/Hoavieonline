@@ -630,7 +630,7 @@ def tai_du_lieu_hoi(ten_hoi):
 
         url = (
             f"https://api.github.com/repos/"
-            f"{GITHUB_REPO}/contents/"
+            f"{REPO_NAME}/contents/"
             f"{tao_ten_file_hoi(ten_hoi)}"
         )
 
@@ -666,7 +666,7 @@ def luu_du_lieu_hoi(ten_hoi, data):
 
         url = (
             f"https://api.github.com/repos/"
-            f"{GITHUB_REPO}/contents/"
+            f"{REPO_NAME}/contents/"
             f"{file_path}"
         )
 
