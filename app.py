@@ -705,13 +705,23 @@ def luu_du_lieu_hoi(ten_hoi, data):
 
             return True
 
-        else:
 
-            st.error(
-                f"Lỗi lưu hội: {res.status_code}"
+        # chống lỗi bấm nhanh / nhiều người lưu cùng lúc
+        if res.status_code == 409:
+
+            time.sleep(1)
+
+            return luu_du_lieu_hoi(
+                ten_hoi,
+                data
             )
 
-            return False
+
+        st.error(
+            f"Lỗi lưu hội: {res.status_code}"
+        )
+
+        return False
 
 
     except Exception as e:
