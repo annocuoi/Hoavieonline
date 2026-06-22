@@ -593,8 +593,8 @@ if not st.session_state.da_dang_nhap:
 
 
                 if (
-                    ten_dang_nhap == tk_xem.get("user")
-                    and mat_khau_nhap == tk_xem.get("pass")
+                    ten_dang_nhap in tk_xem
+                    and mat_khau_nhap == tk_xem[ten_dang_nhap].get("pass")
                 ):
 
                     dang_nhap_ok = True
