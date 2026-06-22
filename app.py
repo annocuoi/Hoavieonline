@@ -556,6 +556,12 @@ with col_logout:
         st.session_state.da_dang_nhap = False
         st.session_state.ten_tai_khoan = ""
         st.session_state.quyen = None
+        # xóa dữ liệu hội đang lưu tạm
+        if "du_lieu_hoi" in st.session_state:
+            del st.session_state.du_lieu_hoi
+
+        if "hoi_dang_mo" in st.session_state:
+            del st.session_state.hoi_dang_mo
 
         st.rerun()
 # ----------------------------------------------------
@@ -835,11 +841,16 @@ elif st.session_state.quyen == "hoi":
     ten = st.session_state.ten_tai_khoan
 
 
-    if "du_lieu_hoi" not in st.session_state:
+    if (
+        "du_lieu_hoi" not in st.session_state
+        or st.session_state.get("hoi_dang_mo") != ten
+    ):
 
         st.session_state.du_lieu_hoi = tai_du_lieu_hoi(
             ten
         )
+
+        st.session_state.hoi_dang_mo = ten
 
 
     du_lieu_hoi_dang_dung = (
