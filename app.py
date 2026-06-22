@@ -533,6 +533,10 @@ if not st.session_state.da_dang_nhap:
             st.session_state.ten_tai_khoan = ten_dang_nhap
             st.session_state.quyen = st.session_state.tai_khoan[ten_dang_nhap]["quyen"]
 
+            st.session_state.chu_so_huu = (
+                st.session_state.tai_khoan[ten_dang_nhap].get("chu_so_huu")
+            )
+
             st.rerun()
 
         else:
