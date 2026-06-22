@@ -2551,12 +2551,18 @@ if st.session_state.quyen == "hoi":
 
                     st.warning("Nhập mật khẩu mới")
 
-                else:
+                eelse:
 
                     du_lieu_hoi_dang_dung["_tai_khoan_xem"]["pass"] = mk_moi
 
+                    ten_file_hoi = (
+                        st.session_state.chu_so_huu
+                        if st.session_state.quyen == "hoi"
+                        else st.session_state.hoi_dang_xem
+                    )
+
                     if luu_du_lieu_hoi(
-                        st.session_state.chu_so_huu,
+                        ten_file_hoi,
                         du_lieu_hoi_dang_dung
                     ):
 
