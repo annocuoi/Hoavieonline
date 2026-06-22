@@ -2398,15 +2398,59 @@ if st.session_state.quyen == "hoi":
         ten_hoi = st.session_state.ten_tai_khoan
 
 
-        da_co = None
+        du_lieu_hoi_dang_dung = tai_du_lieu_hoi(
+            ten_hoi
+        )
 
-        for tk, info in st.session_state.tai_khoan.items():
+        tk_xem_info = du_lieu_hoi_dang_dung.get(
+            "_tai_khoan_xem",
+            None
+        )
 
-            if (
-                info.get("quyen") == "xem"
-                and info.get("chu_so_huu") == ten_hoi
+
+        if tk_xem_info:
+
+            st.success(
+                f"Đang có tài khoản xem: {tk_xem_info.get('user')}"
+            )
+
+            st.write("---")
+
+            st.subheader("🔑 Đổi mật khẩu")
+
+
+            mk_moi = st.text_input(
+                "Mật khẩu mới",
+                type="password",
+                key="mk_xem_moi"
+            )
+
+
+            if st.button(
+                "💾 Lưu mật khẩu mới",
+                use_container_width=True
             ):
-                da_co = tk
+
+                if mk_moi.strip() == "":
+
+                    st.warning("Nhập mật khẩu mới")
+
+                else:
+
+                    du_lieu_hoi_dang_dung["_tai_khoan_xem"]["pass"] = mk_moi
+
+
+                    if luu_du_lieu_hoi(
+                        ten_hoi,
+                        du_lieu_hoi_dang_dung
+                    ):
+
+                        st.success("✅ Đã đổi mật khẩu")
+
+                        st.rerun()
+
+
+        else:
 
 
         if da_co:
