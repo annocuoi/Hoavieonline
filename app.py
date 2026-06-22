@@ -2392,11 +2392,11 @@ if st.session_state.quyen == "admin":
     with tab_kiem_soat:
         if "thong_bao_xoa" in st.session_state:
 
-        st.success(
-            st.session_state.thong_bao_xoa
-        )
+            st.success(
+                st.session_state.thong_bao_xoa
+            )
 
-        del st.session_state.thong_bao_xoa
+            del st.session_state.thong_bao_xoa
 
         st.subheader("📊 Kiểm soát khách hàng")
 
