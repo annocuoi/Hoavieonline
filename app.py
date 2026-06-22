@@ -2403,31 +2403,31 @@ if st.session_state.quyen == "admin":
                 )
                 if info.get("trang_thai", "hoat_dong") == "hoat_dong":
 
-                if st.button(
-                    "🔒 Ngưng hoạt động",
-                    key=f"khoa_{ten}"
-                ):
+                    if st.button(
+                        "🔒 Ngưng hoạt động",
+                        key=f"khoa_{ten}"
+                    ):
 
-                    st.session_state.tai_khoan[ten]["trang_thai"] = "khoa"
+                        st.session_state.tai_khoan[ten]["trang_thai"] = "khoa"
 
-                    luu_du_lieu()
+                        luu_du_lieu()
 
-                    st.rerun()
+                        st.rerun()
 
-            else:
+                else:
 
-                st.error("⛔ Hội đang ngưng hoạt động")
+                    st.error("⛔ Hội đang ngưng hoạt động")
 
-                if st.button(
-                    "🔓 Mở lại",
-                    key=f"mo_{ten}"
-                ):
+                    if st.button(
+                        "🔓 Mở lại",
+                        key=f"mo_{ten}"
+                    ):
 
-                    st.session_state.tai_khoan[ten]["trang_thai"] = "hoat_dong"
+                        st.session_state.tai_khoan[ten]["trang_thai"] = "hoat_dong"
 
-                    luu_du_lieu()
+                        luu_du_lieu()
 
-                    st.rerun()
+                        st.rerun()
 
 # =========================
 # TÀI KHOẢN XEM CỦA HỘI
