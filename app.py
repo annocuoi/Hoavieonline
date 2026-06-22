@@ -2494,6 +2494,11 @@ if st.session_state.quyen == "admin":
 if st.session_state.quyen == "hoi":
 
     with tab_tai_khoan_xem:
+        if "force_reload" in st.session_state:
+
+            del st.session_state.force_reload
+
+            st.rerun()
 
         st.subheader("🔑 Tài khoản xem cho thành viên")
 
@@ -2618,8 +2623,8 @@ if st.session_state.quyen == "hoi":
                         du_lieu_hoi_dang_dung
                     ):
 
-                        st.success("Đã tạo")
-
                         st.session_state.reset_tk_xem = True
+
+                        st.session_state.force_reload = True
 
                         st.rerun()
