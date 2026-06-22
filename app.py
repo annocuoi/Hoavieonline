@@ -2454,11 +2454,31 @@ if st.session_state.quyen == "hoi":
 
             if st.button("➕ Tạo tài khoản xem"):
 
-                if tk_xem in st.session_state.tai_khoan:
+                trung = False
 
-                    st.error(
-                        "Tên đăng nhập đã tồn tại"
-                    )
+                # kiểm tra admin + hội
+                if tk_xem in st.session_state.tai_khoan:
+                    trung = True
+
+
+                # kiểm tra tài khoản xem các hội khác
+                for ten, info in st.session_state.tai_khoan.items():
+
+                    if info.get("quyen") == "hoi":
+
+                        data_check = doc_du_lieu_hoi(ten)
+
+                        tk = data_check.get("_tai_khoan_xem", {})
+
+                        if tk.get("user") == tk_xem:
+                            trung = True
+                            break
+
+
+                if trung:
+
+                    st.error("Tên đăng nhập đã tồn tại")
+
 
                 else:
 
@@ -2478,5 +2498,7 @@ if st.session_state.quyen == "hoi":
                     ):
 
                         st.success("Đã tạo")
+
                         st.session_state.reset_tk_xem = True
+
                         st.rerun()
