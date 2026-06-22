@@ -2157,6 +2157,10 @@ if st.session_state.quyen != "admin":
 # ==================================================
 if st.session_state.quyen == "admin":
     with tab_khach:
+
+        if "key_xoa_khach" not in st.session_state:
+            st.session_state.key_xoa_khach = 0
+
         if "thong_bao_xoa" in st.session_state:
 
             st.success(
@@ -2164,6 +2168,8 @@ if st.session_state.quyen == "admin":
             )
 
             del st.session_state.thong_bao_xoa
+
+
         st.markdown("### 👥 Quản lý tài khoản hội")
         if "reset_tao_hoi" in st.session_state:
             st.session_state.tao_user = ""
@@ -2313,7 +2319,7 @@ if st.session_state.quyen == "admin":
         khach_xoa = st.selectbox(
             "Chọn khách cần xóa",
             ["-- Chọn --"] + ds_khach,
-            key="xoa_khach"
+            key=f"xoa_khach_{st.session_state.key_xoa_khach}"
         )
 
 
@@ -2366,12 +2372,7 @@ if st.session_state.quyen == "admin":
                         f"✅ Đã xóa hội {khach_xoa}"
                     )
 
-                    del st.session_state.xoa_khach
-
-                    st.rerun()
-
-                    if "xoa_khach" in st.session_state:
-                        del st.session_state.xoa_khach
+                    st.session_state.key_xoa_khach += 1
 
                     st.rerun()
 if st.session_state.quyen == "admin":
