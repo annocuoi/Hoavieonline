@@ -607,9 +607,15 @@ if not st.session_state.da_dang_nhap:
         if dang_nhap_ok:
 
             st.session_state.da_dang_nhap = True
-            st.session_state.ten_tai_khoan = ten_dang_nhap
             st.session_state.quyen = quyen_login
-            st.session_state.chu_so_huu = chu_so_huu
+
+            if quyen_login == "xem":
+                st.session_state.ten_tai_khoan = chu_so_huu
+                st.session_state.chu_so_huu = chu_so_huu
+
+            else:
+                st.session_state.ten_tai_khoan = ten_dang_nhap
+                st.session_state.chu_so_huu = None
 
             st.rerun()
 
@@ -966,7 +972,10 @@ height=75
 )
 
 st.write("---")
-danh_sach_tv = list(du_lieu_hoi_dang_dung.keys())
+danh_sach_tv = [
+    k for k in du_lieu_hoi_dang_dung.keys()
+    if not k.startswith("_")
+]
 
 if st.session_state.quyen == "admin":
 
@@ -1364,10 +1373,13 @@ if st.session_state.quyen == "hoi":
                         if luu_du_lieu():
                             st.session_state.key_them_tv += 1
                             st.rerun()
-
+                danh_sach_tv_that = [
+                    x for x in du_lieu_hoi_dang_dung.keys()
+                    if not x.startswith("_")
+                ]
                 tv_xoa = st.selectbox(
                     "🗑 Xóa hội viên",
-                    ["-- Chọn --"] + list(du_lieu_hoi_dang_dung.keys()),
+                    ["-- Chọn --"] + danh_sach_tv_that,
                     key="xoa_tv"
                 )
 
@@ -1391,9 +1403,11 @@ if st.session_state.quyen == "hoi":
 
             danh_sach_tv = (
                 ["-- Chọn --"]
-                + list(
-                    du_lieu_hoi_dang_dung.keys()
-                )
+                +
+                [
+                    x for x in du_lieu_hoi_dang_dung.keys()
+                    if not x.startswith("_")
+                ]
             )
 
 
@@ -1490,6 +1504,9 @@ if st.session_state.quyen != "admin":
 
         for ten_tv, ds_hoa in du_lieu_hoi_dang_dung.items():
 
+            if ten_tv.startswith("_"):
+                continue
+
             dem = {
                 "Đỏ":0,
                 "Cam":0,
@@ -1497,7 +1514,6 @@ if st.session_state.quyen != "admin":
                 "Xanh dương":0,
                 "Xanh lá":0
             }
-
             for hoa in ds_hoa:
                 info = st.session_state.kho_hoa_tong.get(hoa,{})
                 cap = info.get("cap","")
