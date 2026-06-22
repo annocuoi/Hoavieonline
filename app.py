@@ -930,7 +930,10 @@ if st.session_state.quyen == "hoi":
 
 if st.session_state.quyen == "xem":
 
-    ten_hien_thi = st.session_state.chu_so_huu
+    ten_hien_thi = du_lieu_hoi_dang_dung.get(
+        "_ten_hien_thi",
+        st.session_state.chu_so_huu
+    )
 
 
 st.markdown(
