@@ -2366,6 +2366,10 @@ if st.session_state.quyen == "admin":
                         f"✅ Đã xóa hội {khach_xoa}"
                     )
 
+                    del st.session_state.xoa_khach
+
+                    st.rerun()
+
                     if "xoa_khach" in st.session_state:
                         del st.session_state.xoa_khach
 
