@@ -1958,8 +1958,10 @@ if st.session_state.quyen != "admin":
 
                         if isinstance(du_lieu_nhap, dict):
 
-                            # ghi đè dữ liệu hội hiện tại
-                            st.session_state.du_lieu_thanh_vien = du_lieu_nhap
+                            # ghi đè dữ liệu của hội hiện tại
+                            st.session_state.du_lieu_thanh_vien[
+                                st.session_state.ten_tai_khoan
+                            ] = du_lieu_nhap
 
 
                             if luu_du_lieu():
@@ -1978,10 +1980,10 @@ if st.session_state.quyen != "admin":
                             )
 
 
-                    except:
+                    except Exception as e:
 
                         st.error(
-                            "❌ File bị lỗi"
+                            f"❌ File bị lỗi: {e}"
                         )
 # ==================================================
 # 👥 QUẢN LÝ TÀI KHOẢN KHÁCH
