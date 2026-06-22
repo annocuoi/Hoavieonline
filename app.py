@@ -576,17 +576,28 @@ if not st.session_state.da_dang_nhap:
                 if info.get("quyen") != "hoi":
                     continue
 
+                data_hoi = doc_du_lieu_hoi(ten_hoi)
 
-                try:
+                st.write("ĐANG KIỂM:", ten_hoi)
+                st.write(data_hoi)
 
-                    data_hoi = doc_du_lieu_hoi(
-                        ten_hoi.strip()
-                    )
+                tk_xem = data_hoi.get(
+                    "_tai_khoan_xem",
+                    {}
+                )
 
-                except:
+                st.write("TK:", tk_xem)
 
-                    continue
+                if (
+                    ten_dang_nhap == tk_xem.get("user")
+                    and mat_khau_nhap == tk_xem.get("pass")
+                ):
 
+                    dang_nhap_ok = True
+                    quyen_login = "xem"
+                    chu_so_huu = ten_hoi
+
+                    break
 
                 tk_xem = data_hoi.get(
                     "_tai_khoan_xem",
