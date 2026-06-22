@@ -2161,15 +2161,6 @@ if st.session_state.quyen == "admin":
         if "key_xoa_khach" not in st.session_state:
             st.session_state.key_xoa_khach = 0
 
-        if "thong_bao_xoa" in st.session_state:
-
-            st.success(
-                st.session_state.thong_bao_xoa
-            )
-
-            del st.session_state.thong_bao_xoa
-
-
         st.markdown("### 👥 Quản lý tài khoản hội")
         if "reset_tao_hoi" in st.session_state:
             st.session_state.tao_user = ""
@@ -2309,6 +2300,14 @@ if st.session_state.quyen == "admin":
         # =========================
 
         st.markdown("### 🗑️ Xóa tài khoản Hội")
+        if "thong_bao_xoa" in st.session_state:
+
+            st.success(
+                st.session_state.thong_bao_xoa
+            )
+
+            del st.session_state.thong_bao_xoa
+
 
         ds_khach = [
             ten
