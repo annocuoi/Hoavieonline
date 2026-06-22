@@ -778,7 +778,7 @@ def luu_du_lieu():
 
     if st.session_state.quyen == "admin":
 
-        return luu_du_lieu()
+        return luu_du_lieu_len_github()
 
 
     elif st.session_state.quyen == "hoi":
@@ -852,9 +852,7 @@ elif st.session_state.quyen == "xem":
 
     hoi = st.session_state.tai_khoan[tk]["chu_so_huu"]
 
-    du_lieu_hoi_dang_dung = (
-        st.session_state.du_lieu_thanh_vien[hoi]
-    )
+    du_lieu_hoi_dang_dung = tai_du_lieu_hoi(hoi)
 
 st.markdown(
 """
@@ -2322,15 +2320,9 @@ if st.session_state.quyen == "admin":
 
             if info.get("quyen") == "hoi":
 
-                so_tv = 0
+                du_lieu_hoi = tai_du_lieu_hoi(ten)
 
-                for tk, info_tv in st.session_state.tai_khoan.items():
-                    if (
-                        info_tv.get("quyen") == "xem"
-                        and info_tv.get("chu_so_huu") == ten
-                    ):
-                        so_tv += 1
-
+                so_tv = len(du_lieu_hoi)
                 st.markdown(
                     f"""
                     ### 👤 {ten}
