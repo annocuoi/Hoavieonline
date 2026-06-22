@@ -2404,10 +2404,6 @@ if st.session_state.quyen == "hoi":
             if st.session_state.get("chu_so_huu")
             else st.session_state.ten_tai_khoan
         )
-        st.write("ĐANG SỬA HỘ:", ten_hoi)
-        st.write(du_lieu_hoi_dang_dung)
-
-
         du_lieu_hoi_dang_dung = doc_du_lieu_hoi(
             ten_hoi
         )
