@@ -610,6 +610,118 @@ def luu_du_lieu_len_github():
     except Exception as e:
         st.error(f"Lỗi mạng: {str(e)}")
         return False
+    
+# ==========================
+# DỮ LIỆU RIÊNG TỪNG HỘI
+# ==========================
+
+def tao_ten_file_hoi(ten_hoi):
+
+    ten = ten_hoi.lower()
+    ten = ten.replace(" ","_")
+
+    return f"hoi/{ten}.json"
+
+
+
+def tai_du_lieu_hoi(ten_hoi):
+
+    try:
+
+        url = (
+            f"https://api.github.com/repos/"
+            f"{GITHUB_REPO}/contents/"
+            f"{tao_ten_file_hoi(ten_hoi)}"
+        )
+
+        r = requests.get(
+            url,
+            headers=HEADERS
+        )
+
+        if r.status_code == 200:
+
+            noi_dung = r.json()["content"]
+
+            return json.loads(
+                base64.b64decode(noi_dung)
+            )
+
+        else:
+
+            return {}
+
+
+    except:
+
+        return {}
+
+
+
+def luu_du_lieu_hoi(ten_hoi, data):
+
+    try:
+
+        file_path = tao_ten_file_hoi(ten_hoi)
+
+        url = (
+            f"https://api.github.com/repos/"
+            f"{GITHUB_REPO}/contents/"
+            f"{file_path}"
+        )
+
+
+        get_file = requests.get(
+            url,
+            headers=HEADERS
+        )
+
+
+        payload = {
+
+            "message": f"Luu hoi {ten_hoi}",
+
+            "content": base64.b64encode(
+                json.dumps(
+                    data,
+                    ensure_ascii=False
+                ).encode()
+            ).decode()
+
+        }
+
+
+        if get_file.status_code == 200:
+
+            payload["sha"] = get_file.json()["sha"]
+
+
+
+        res = requests.put(
+            url,
+            headers=HEADERS,
+            json=payload
+        )
+
+
+        if res.status_code in [200,201]:
+
+            return True
+
+        else:
+
+            st.error(
+                f"Lỗi lưu hội: {res.status_code}"
+            )
+
+            return False
+
+
+    except Exception as e:
+
+        st.error(e)
+
+        return False
 
 # Khởi tạo nạp dữ liệu
 # ==========================
@@ -1833,7 +1945,11 @@ if st.session_state.quyen == "admin":
 
                 }
 
-                if ten_moi not in st.session_state.du_lieu_thanh_vien:
+                # tạo file dữ liệu riêng cho hội
+                luu_du_lieu_hoi(
+                    ten_moi,
+                    {}
+                )
                     st.session_state.du_lieu_thanh_vien[ten_moi] = {}
 
                 luu_du_lieu_len_github()
@@ -1970,7 +2086,7 @@ if st.session_state.quyen == "admin":
         # 🗑️ XÓA TÀI KHOẢN KHÁCH
         # =========================
 
-        st.markdown("### 🗑️ Xóa tài khoản khách")
+        st.markdown("### 🗑️ Xóa tài khoản Hội")
 
         ds_khach = [
             ten
@@ -1986,7 +2102,7 @@ if st.session_state.quyen == "admin":
 
 
         if st.button(
-            "❌ Xóa khách hàng",
+            "❌ Xóa Hội",
             use_container_width=True
         ):
 
