@@ -2526,6 +2526,13 @@ if st.session_state.quyen == "hoi":
             st.write("---")
 
             st.subheader("🔑 Đổi mật khẩu")
+            if "thong_bao_mk" in st.session_state:
+
+                st.success(
+                    st.session_state.thong_bao_mk
+                )
+
+                del st.session_state.thong_bao_mk
 
 
             mk_moi = st.text_input(
@@ -2548,13 +2555,14 @@ if st.session_state.quyen == "hoi":
 
                     du_lieu_hoi_dang_dung["_tai_khoan_xem"]["pass"] = mk_moi
 
-
                     if luu_du_lieu_hoi(
-                        ten_hoi,
+                        hoi,
                         du_lieu_hoi_dang_dung
                     ):
 
-                        st.success("✅ Đã đổi mật khẩu")
+                        st.session_state.thong_bao_mk = "✅ Đã đổi mật khẩu thành công"
+
+                        st.session_state.mk_xem = ""
 
                         st.rerun()
 
