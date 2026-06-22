@@ -632,8 +632,15 @@ if "da_load_data" not in st.session_state:
 
     st.session_state.tai_khoan = du_lieu_goc.get(
         "tai_khoan",
-        TAI_KHOAN_MAC_DINH.copy()
+        {}
     )
+
+    if "admin" not in st.session_state.tai_khoan:
+        st.session_state.tai_khoan["admin"] = {
+            "pass": "111111",
+            "quyen": "admin",
+            "ngay_tao": datetime.now().strftime("%d/%m/%Y")
+        }
 
     st.session_state.da_load_data = True
 
@@ -1051,15 +1058,14 @@ if st.session_state.quyen == "admin":
                         del st.session_state.kho_hoa_tong[hoa_xoa]
         
         
-                        for tv in st.session_state.du_lieu_thanh_vien:
-        
-                            st.session_state.du_lieu_thanh_vien[tv] = [
-        
-                                h for h in st.session_state.du_lieu_thanh_vien[tv]
-        
-                                if h != hoa_xoa
-        
-                            ]
+                        for hoi in st.session_state.du_lieu_thanh_vien:
+
+                            for tv in st.session_state.du_lieu_thanh_vien[hoi]:
+
+                                st.session_state.du_lieu_thanh_vien[hoi][tv] = [
+                                    h for h in st.session_state.du_lieu_thanh_vien[hoi][tv]
+                                    if h != hoa_xoa
+                                ]
         
         
                         if luu_du_lieu_len_github():
@@ -1935,6 +1941,10 @@ if st.session_state.quyen == "admin":
         st.write("---")
         st.markdown("### 🔑 Đổi mật khẩu Admin")
 
+        if "reset_admin_pass" in st.session_state:
+            st.session_state.doi_pass_admin = ""
+            del st.session_state.reset_admin_pass
+
         mk_admin_moi = st.text_input(
             "Mật khẩu admin mới",
             type="password",
@@ -1954,6 +1964,7 @@ if st.session_state.quyen == "admin":
 
                 if luu_du_lieu_len_github():
                     st.success("✅ Đã đổi mật khẩu admin")
+                    st.session_state.reset_admin_pass = True
                     st.rerun()
         # =========================
         # 🗑️ XÓA TÀI KHOẢN KHÁCH
@@ -2097,13 +2108,21 @@ if st.session_state.quyen == "hoi":
 
         else:
 
+            if "reset_tk_xem" in st.session_state:
+                st.session_state.tk_xem = ""
+                st.session_state.mk_xem = ""
+                del st.session_state.reset_tk_xem
+
+
             tk_xem = st.text_input(
-                "Tên đăng nhập xem"
+                "Tên đăng nhập xem",
+                key="tk_xem"
             )
 
             mk_xem = st.text_input(
                 "Mật khẩu",
-                type="password"
+                type="password",
+                key="mk_xem"
             )
 
 
@@ -2132,5 +2151,6 @@ if st.session_state.quyen == "hoi":
                     luu_du_lieu_len_github()
 
                     st.success("Đã tạo")
+                    st.session_state.reset_tk_xem = True
 
                     st.rerun()
