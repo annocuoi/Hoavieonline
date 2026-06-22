@@ -24,33 +24,6 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Ẩn toàn bộ toolbar góc phải dưới Streamlit */
-[data-testid="stToolbar"] {
-    display: none !important;
-}
-
-/* Ẩn status widget góc phải dưới */
-[data-testid="stStatusWidget"] {
-    display: none !important;
-}
-
-/* Ẩn nút feedback / avatar */
-[data-testid="stDecoration"] {
-    display: none !important;
-}
-
-/* Ẩn footer + menu */
-footer {
-    display: none !important;
-}
-
-#MainMenu {
-    display: none !important;
-}
-
-header {
-    display: none !important;
-}
     /* Ẩn thanh toolbar Streamlit trên cùng */
     [data-testid="stToolbar"] {
         display: none;
@@ -122,17 +95,6 @@ header {
     div[role="option"] {
         background:white !important;
     }
-    /* chữ trong selectbox */
-    div[data-baseweb="select"] * {
-        color:#000000 !important;
-    }
-
-    /* chữ option đang chọn */
-    div[data-baseweb="select"] span {
-        color:#000000 !important;
-        font-weight:700 !important;
-    }
-
 
     /* chữ trong ô nhập */
     input {
@@ -193,16 +155,6 @@ header {
         color:#000 !important;
     }
 
-    html, body, .stApp {
-        color:#111827 !important;
-    }
-
-    /* chữ thường */
-    p, span, label, div {
-        color:#111827 !important;
-        font-weight:600;
-    }
-
     /* tiêu đề */
     h1, h2, h3, h4 {
         color:#1e293b !important;
@@ -248,17 +200,6 @@ header {
     div[data-baseweb="select"] * {
         color:black !important;
     }
-
-    /* toàn bộ nền */
-    .stApp {
-        background: linear-gradient(
-            135deg,
-            #1e1b4b,
-            #581c87,
-            #831843
-        );
-    }
-
 
     /* bỏ nền trắng chính giữa */
     .block-container {
@@ -308,25 +249,6 @@ header {
 
 GRID_STYLE = """
 <style>
-/* Ẩn menu Streamlit góc dưới */
-.st-emotion-cache-1wbqy5l {
-    display: none !important;
-}
-
-/* Ẩn deploy / feedback */
-.stDeployButton {
-    display: none !important;
-}
-
-/* Ẩn footer */
-footer {
-    visibility: hidden;
-}
-
-/* Ẩn menu */
-#MainMenu {
-    visibility: hidden;
-}
 html, body{
     overflow-x:hidden;
     max-width:100%;
@@ -503,16 +425,7 @@ def sap_xep_hoa(ds_hoa):
 # ⚙️ CẤU HÌNH HỆ THỐNG (ĐỌC TOKEN TỪ SECRETS AN TOÀN)
 # ====================================================
 MAT_KHAU_HE_THONG = "111111"
-TAI_KHOAN_MAC_DINH = {
-    "admin": {
-        "pass": "111111",
-        "quyen": "admin"
-    }
-}
 
-
-if "quyen" not in st.session_state:
-    st.session_state.quyen = None
 
 if "GITHUB_TOKEN" in st.secrets:
     GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
@@ -530,40 +443,15 @@ HEADERS = {
 API_URL = f"https://api.github.com/repos/{REPO_NAME}/contents/{FILE_PATH}"
 
 # ====================================================
-
-col_title, col_logout = st.columns([8, 2])
-with col_logout:
-    if st.button("🚪 Đăng xuất", type="secondary", use_container_width=True):
-        st.session_state.da_dang_nhap = False
-        st.rerun()
-# ======================================
-# CHỌN DỮ LIỆU THEO TÀI KHOẢN
-# ======================================
-# sửa lỗi thiếu tên tài khoản khi F5
-if "ten_tai_khoan" not in st.session_state:
-    st.session_state.ten_tai_khoan = "admin"
-if "du_lieu_thanh_vien" not in st.session_state:
-    st.session_state.du_lieu_thanh_vien = {}
-
-if st.session_state.quyen == "admin":
-
-    # admin không dùng hội viên
-    du_lieu_hoi_dang_dung = {}
-
-else:
-
-    ten = st.session_state.ten_tai_khoan
-
-    if ten not in st.session_state.du_lieu_thanh_vien:
-        st.session_state.du_lieu_thanh_vien[ten] = {}
-
-    du_lieu_hoi_dang_dung = st.session_state.du_lieu_thanh_vien[ten]
-
 # ----------------------------------------------------
 # 📂 HÀM ĐỌC DỮ LIỆU TỪ GITHUB
 # ----------------------------------------------------
 def tai_du_lieu_tu_github():
-    mac_dinh = {"kho_hoa_tong": {}, "du_lieu_thanh_vien": {}}
+    mac_dinh = {
+        "kho_hoa_tong": {},
+        "tai_khoan": {},
+        "du_lieu_thanh_vien": {}
+    }
     try:
         url_doc = f"https://api.github.com/repos/{REPO_NAME}/contents/{FILE_PATH}?ref={BRANCH}&t={time.time()}"
         headers_doc = {"Accept": "application/vnd.github.v3.raw"}
@@ -600,25 +488,28 @@ if "ten_tai_khoan" not in st.session_state:
     st.session_state.ten_tai_khoan = ""
 
 if "quyen" not in st.session_state:
-    st.session_state.quyen = Non
+    st.session_state.quyen = None
 # ==========================
-# LẤY TÀI KHOẢN ĐĂNG NHẬP
+# LOAD TÀI KHOẢN
 # ==========================
 
 if "tai_khoan" not in st.session_state:
 
     du_lieu_goc = tai_du_lieu_tu_github()
 
-    st.session_state.tai_khoan = du_lieu_goc.get(
-        "tai_khoan",
-        {}
-    )
-if "admin" not in st.session_state.tai_khoan:
+    st.session_state.tai_khoan = du_lieu_goc.get("tai_khoan", {})
+
+
+# chỉ tạo admin lần đầu tiên khi github chưa có gì
+if len(st.session_state.tai_khoan) == 0:
+
     st.session_state.tai_khoan["admin"] = {
         "pass": "111111",
-        "quyen": "admin"
+        "quyen": "admin",
+        "ngay_tao": datetime.now().strftime("%d/%m/%Y")
     }
 
+    luu_du_lieu_len_github()
 
 if not st.session_state.da_dang_nhap:
 
@@ -638,7 +529,7 @@ if not st.session_state.da_dang_nhap:
 
         if (
             ten_dang_nhap in st.session_state.tai_khoan
-            and mat_khau_nhap == st.session_state.tai_khoan[ten_dang_nhap]["pass"]
+            and mat_khau_nhap == st.session_state.tai_khoan[ten_dang_nhap].get("pass")
         ):
 
             st.session_state.da_dang_nhap = True
@@ -651,10 +542,25 @@ if not st.session_state.da_dang_nhap:
             st.error("Sai tài khoản hoặc mật khẩu")
 
     st.stop()
+# ==========================
+# NÚT ĐĂNG XUẤT
+# ==========================
 
+col_title, col_logout = st.columns([8, 2])
 
+with col_logout:
 
-TAI_KHOAN = st.session_state.tai_khoan
+    if st.button(
+        "🚪 Đăng xuất",
+        type="secondary",
+        use_container_width=True
+    ):
+
+        st.session_state.da_dang_nhap = False
+        st.session_state.ten_tai_khoan = ""
+        st.session_state.quyen = None
+
+        st.rerun()
 # ----------------------------------------------------
 # 💾 HÀM GHI DỮ LIỆU LÊN GITHUB
 # ----------------------------------------------------
@@ -732,6 +638,23 @@ if "da_load_data" not in st.session_state:
     )
 
     st.session_state.da_load_data = True
+
+# ==============================
+# CHỌN DATA SAU KHI ĐĂNG NHẬP
+# ==============================
+
+if st.session_state.quyen == "admin":
+
+    du_lieu_hoi_dang_dung = {}
+
+else:
+
+    ten = st.session_state.ten_tai_khoan
+
+    if ten not in st.session_state.du_lieu_thanh_vien:
+        st.session_state.du_lieu_thanh_vien[ten] = {}
+
+    du_lieu_hoi_dang_dung = st.session_state.du_lieu_thanh_vien[ten]
 
 st.markdown(
 """
