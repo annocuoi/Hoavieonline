@@ -524,18 +524,48 @@ if not st.session_state.da_dang_nhap:
 
     if st.button("🔐 Đăng Nhập", use_container_width=True):
 
+        dang_nhap_ok = False
+
+        # admin + hội
         if (
             ten_dang_nhap in st.session_state.tai_khoan
             and mat_khau_nhap == st.session_state.tai_khoan[ten_dang_nhap].get("pass")
         ):
 
+            dang_nhap_ok = True
+            quyen_login = st.session_state.tai_khoan[ten_dang_nhap]["quyen"]
+            chu_so_huu = None
+
+
+        # tài khoản xem trong từng hội
+        else:
+
+            for ten_hoi, info in st.session_state.tai_khoan.items():
+
+                if info.get("quyen") == "hoi":
+
+                    data_hoi = tai_du_lieu_hoi(ten_hoi)
+
+                    tk_xem = data_hoi.get("_tai_khoan_xem", {})
+
+                    if (
+                        ten_dang_nhap == tk_xem.get("user")
+                        and mat_khau_nhap == tk_xem.get("pass")
+                    ):
+
+                        dang_nhap_ok = True
+                        quyen_login = "xem"
+                        chu_so_huu = ten_hoi
+
+                        break
+
+
+        if dang_nhap_ok:
+
             st.session_state.da_dang_nhap = True
             st.session_state.ten_tai_khoan = ten_dang_nhap
-            st.session_state.quyen = st.session_state.tai_khoan[ten_dang_nhap]["quyen"]
-
-            st.session_state.chu_so_huu = (
-                st.session_state.tai_khoan[ten_dang_nhap].get("chu_so_huu")
-            )
+            st.session_state.quyen = quyen_login
+            st.session_state.chu_so_huu = chu_so_huu
 
             st.rerun()
 
@@ -2416,21 +2446,21 @@ if st.session_state.quyen == "hoi":
 
                 else:
 
-                    st.session_state.tai_khoan[tk_xem] = {
+                    du_lieu_hoi_dang_dung["_tai_khoan_xem"] = {
+
+                        "user": tk_xem,
 
                         "pass": mk_xem,
-
-                        "quyen": "xem",
-
-                        "chu_so_huu": ten_hoi,
 
                         "ngay_tao": datetime.now().strftime("%d/%m/%Y")
                     }
 
 
-                    luu_du_lieu()
+                    if luu_du_lieu_hoi(
+                        ten_hoi,
+                        du_lieu_hoi_dang_dung
+                    ):
 
-                    st.success("Đã tạo")
-                    st.session_state.reset_tk_xem = True
-
-                    st.rerun()
+                        st.success("Đã tạo")
+                        st.session_state.reset_tk_xem = True
+                        st.rerun()
