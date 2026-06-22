@@ -514,7 +514,7 @@ def doc_du_lieu_hoi(ten_hoi):
         url = (
             f"https://api.github.com/repos/"
             f"{REPO_NAME}/contents/"
-            f"{tao_file_hoi(ten_hoi):}"
+            f"{tao_ten_file_hoi(ten_hoi):}"
         )
 
         r = requests.get(
