@@ -1579,9 +1579,14 @@ if st.session_state.quyen != "admin":
         
         with tab1:
         
+            danh_sach_tv = [
+                x for x in danh_sach_tv
+                if x != "-- Chọn --"
+            ]
+
             tv_xem = st.selectbox(
                 "Xem kho của:",
-                options=["-- Chọn --"] + danh_sach_tv,
+                ["-- Chọn --"] + danh_sach_tv,
                 key="selectTV"
             )
         
