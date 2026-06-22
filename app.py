@@ -1087,9 +1087,14 @@ if st.session_state.quyen == "admin":
         # TÌM KIẾM + LỌC HOA
         # =============================
 
-                tim_hoa = st.text_input(
+                ds_tim_hoa = [
+                    "-- Chọn --"
+                ] + list(st.session_state.kho_hoa_tong.keys())
+
+
+                tim_hoa = st.selectbox(
                     "🔍 Tìm hoa",
-                    placeholder="Nhập tên hoa...",
+                    ds_tim_hoa,
                     key="tim_hoa_kho"
                 )
             
@@ -1142,9 +1147,11 @@ if st.session_state.quyen == "admin":
                 for ten_hoa, info in st.session_state.kho_hoa_tong.items():
             
             
-                    if tim_hoa.lower() not in ten_hoa.lower():
-            
-                        continue
+                    if tim_hoa != "-- Chọn --":
+
+                        if tim_hoa != ten_hoa:
+
+                            continue
             
             
                     if loc_cap != "Tất cả":
