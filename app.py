@@ -1795,20 +1795,26 @@ if st.session_state.quyen != "admin":
 # ==================================================
 if st.session_state.quyen == "admin":
     with tab_khach:
-
+        def xoa_form_tao_hoi():
+            st.session_state.tao_user = ""
+            st.session_state.tao_pass = ""
         st.markdown("### 👥 Quản lý tài khoản hội")
 
         ten_moi = st.text_input(
             "Tên tài khoản hội",
-            key="tao_user_input"
+            key="tao_user"
         )
+
 
         mat_khau_moi = st.text_input(
             "Mật khẩu",
-            key="tao_pass_input"
+            key="tao_pass"
         )
 
-        if st.button("➕ Tạo tài khoản hội"):
+        if st.button(
+            "➕ Tạo tài khoản hội",
+            on_click=xoa_form_tao_hoi
+        ):
 
             if ten_moi.strip() == "" or mat_khau_moi.strip() == "":
                 st.warning("Nhập đủ tài khoản và mật khẩu")
