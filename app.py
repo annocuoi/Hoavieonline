@@ -2520,10 +2520,14 @@ if st.session_state.quyen == "hoi":
                 del st.session_state.thong_bao_mk
 
 
+            if "key_mk_xem" not in st.session_state:
+                st.session_state.key_mk_xem = 0
+
+
             mk_moi = st.text_input(
                 "Mật khẩu mới",
                 type="password",
-                key="mk_xem_moi"
+                key=f"mk_xem_moi_{st.session_state.key_mk_xem}"
             )
 
 
@@ -2547,7 +2551,7 @@ if st.session_state.quyen == "hoi":
 
                         st.session_state.thong_bao_mk = "✅ Đã đổi mật khẩu thành công"
 
-                        st.session_state.mk_xem_moi = ""
+                        st.session_state.key_mk_xem += 1
 
                         st.rerun()
 
