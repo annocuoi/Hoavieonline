@@ -569,8 +569,19 @@ if not st.session_state.da_dang_nhap:
             and mat_khau_nhap == st.session_state.tai_khoan[ten_dang_nhap].get("pass")
         ):
 
+            info_login = st.session_state.tai_khoan[ten_dang_nhap]
+
+            if info_login.get("trang_thai", "hoat_dong") == "khoa":
+
+                st.error("⛔ Tài khoản đã ngưng hoạt động")
+
+                st.stop()
+
+
             dang_nhap_ok = True
-            quyen_login = st.session_state.tai_khoan[ten_dang_nhap]["quyen"]
+
+            quyen_login = info_login["quyen"]
+
             chu_so_huu = None
 
 
@@ -581,7 +592,8 @@ if not st.session_state.da_dang_nhap:
 
                 if info.get("quyen") != "hoi":
                     continue
-
+                if info.get("trang_thai", "hoat_dong") == "khoa":
+                    continue
                 data_hoi = doc_du_lieu_hoi(ten_hoi)
 
                 tk_xem = data_hoi.get(
@@ -2175,10 +2187,11 @@ if st.session_state.quyen == "admin":
 
             else:
                 st.session_state.tai_khoan[ten_moi] = {
+
                     "pass": mat_khau_moi,
                     "quyen": "hoi",
-                    "ngay_tao": datetime.now().strftime("%d/%m/%Y"),
-
+                    "trang_thai": "hoat_dong",
+                    "ngay_tao": datetime.now().strftime("%d/%m/%Y")
                 }
 
                 # tạo file dữ liệu riêng cho hội
@@ -2388,6 +2401,33 @@ if st.session_state.quyen == "admin":
                     ---
                     """
                 )
+                if info.get("trang_thai", "hoat_dong") == "hoat_dong":
+
+                if st.button(
+                    "🔒 Ngưng hoạt động",
+                    key=f"khoa_{ten}"
+                ):
+
+                    st.session_state.tai_khoan[ten]["trang_thai"] = "khoa"
+
+                    luu_du_lieu()
+
+                    st.rerun()
+
+            else:
+
+                st.error("⛔ Hội đang ngưng hoạt động")
+
+                if st.button(
+                    "🔓 Mở lại",
+                    key=f"mo_{ten}"
+                ):
+
+                    st.session_state.tai_khoan[ten]["trang_thai"] = "hoat_dong"
+
+                    luu_du_lieu()
+
+                    st.rerun()
 
 # =========================
 # TÀI KHOẢN XEM CỦA HỘI
