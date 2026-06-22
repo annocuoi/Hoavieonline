@@ -1115,11 +1115,13 @@ if st.session_state.quyen == "admin":
 
                 tong_hoa = sum(dem_cap.values())
 
+                def reset_tim_hoa():
 
+                    st.session_state.tim_hoa_kho = "-- Chọn --"
                 loc_cap = st.radio(
                     "Lọc cấp",
                     [
-                        f"🌈 Tất cả: {tong_hoa}",
+                        f"⚪ Tất cả: {tong_hoa}",
                         f"🔴 Đỏ: {dem_cap['Đỏ']}",
                         f"🟠 Cam: {dem_cap['Cam']}",
                         f"🟣 Tím: {dem_cap['Tím']}",
@@ -1127,7 +1129,8 @@ if st.session_state.quyen == "admin":
                         f"🟢 Xanh lá: {dem_cap['Xanh lá']}",
                     ],
                     horizontal=True,
-                    key="loc_cap_kho"
+                    key="loc_cap_kho",
+                    on_change=reset_tim_hoa
                 )
 
                 loc_cap = (
