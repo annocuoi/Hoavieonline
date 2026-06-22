@@ -1857,7 +1857,9 @@ if st.session_state.quyen == "admin":
             key="doi_pass_hoi"
         )
 
-
+        if "reset_mk_hoi" in st.session_state:
+            st.session_state.mk_hoi_moi = ""
+            del st.session_state.reset_mk_hoi
         mk_hoi_moi = st.text_input(
             "Mật khẩu mới cho hội",
             type="password",
@@ -1885,6 +1887,8 @@ if st.session_state.quyen == "admin":
                 if luu_du_lieu_len_github():
 
                     st.success("Đã đổi mật khẩu hội")
+
+                    st.session_state.reset_mk_hoi = True
 
                     st.rerun()
         # =========================
