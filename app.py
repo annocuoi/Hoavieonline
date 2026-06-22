@@ -1795,11 +1795,11 @@ if st.session_state.quyen != "admin":
 # ==================================================
 if st.session_state.quyen == "admin":
     with tab_khach:
-        def xoa_form_tao_hoi():
+        st.markdown("### 👥 Quản lý tài khoản hội")
+        if "reset_tao_hoi" in st.session_state:
             st.session_state.tao_user = ""
             st.session_state.tao_pass = ""
-        st.markdown("### 👥 Quản lý tài khoản hội")
-
+            del st.session_state.reset_tao_hoi
         ten_moi = st.text_input(
             "Tên tài khoản hội",
             key="tao_user"
@@ -1811,10 +1811,7 @@ if st.session_state.quyen == "admin":
             key="tao_pass"
         )
 
-        if st.button(
-            "➕ Tạo tài khoản hội",
-            on_click=xoa_form_tao_hoi
-        ):
+        if st.button("➕ Tạo tài khoản hội"):
 
             if ten_moi.strip() == "" or mat_khau_moi.strip() == "":
                 st.warning("Nhập đủ tài khoản và mật khẩu")
@@ -1835,9 +1832,9 @@ if st.session_state.quyen == "admin":
 
                 luu_du_lieu_len_github()
 
-                st.success("✅ Đã tạo tài khoản hội")
+                st.success("Đã tạo tài khoản hội")
 
-                time.sleep(1)
+                st.session_state.reset_tao_hoi = True
 
                 st.rerun()
         # =========================
