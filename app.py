@@ -617,10 +617,6 @@ if not st.session_state.da_dang_nhap:
                     "_tai_khoan_xem",
                     {}
                 )
-                st.write("HỘ:", ten_hoi)
-                st.write("TK XEM:", tk_xem)
-                st.write("NHẬP:", ten_dang_nhap, mat_khau_nhap)
-
 
                 if (
                     ten_dang_nhap == tk_xem.get("user")
