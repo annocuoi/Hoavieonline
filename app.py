@@ -2191,6 +2191,7 @@ if st.session_state.quyen == "admin":
                     "pass": mat_khau_moi,
                     "quyen": "hoi",
                     "trang_thai": "hoat_dong",
+                    "ten_hien_thi": ten_moi,
                     "ngay_tao": datetime.now().strftime("%d/%m/%Y")
                 }
 
