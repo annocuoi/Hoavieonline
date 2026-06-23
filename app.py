@@ -24,6 +24,9 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    iframe {
+        display:none !important;
+    }
     /* Xóa nút đỏ + nút tròn góc dưới mobile Streamlit */
     div[data-testid="stBottomBlockContainer"],
     div[data-testid="stFloatingActionButton"],
