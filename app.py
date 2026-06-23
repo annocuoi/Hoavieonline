@@ -2015,11 +2015,7 @@ if st.session_state.quyen != "admin":
 
                 if ds_tim:
 
-                    hoa_chon = st.selectbox(
-                        f"🌺 Tìm thấy {len(ds_tim)} hoa",
-                        ds_tim,
-                        key="chon_hoa_tra_cuu"
-                    )
+                    hoa_chon = ds_tim[0]
 
                     ds_co = []
 
@@ -2032,6 +2028,7 @@ if st.session_state.quyen != "admin":
                     st.success(
                         f"🌺 {hoa_chon} - Có {len(ds_co)} thành viên sở hữu"
                     )
+
 
                     for tv in ds_co:
                         st.markdown(
