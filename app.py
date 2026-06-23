@@ -24,33 +24,29 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Xóa toàn bộ icon góc phải dưới Streamlit */
-    [data-testid="stDecoration"],
-    [data-testid="stStatusWidget"],
-    [data-testid="stToolbar"],
-    [data-testid="stHeader"],
-    [data-testid="stMainMenu"] {
+    /* Xóa nút đỏ + nút tròn góc dưới mobile Streamlit */
+    div[data-testid="stBottomBlockContainer"],
+    div[data-testid="stFloatingActionButton"],
+    div[data-testid="stAppToolbar"],
+    div[data-testid="stElementToolbar"],
+    div[data-testid="stBaseButton-secondary"],
+    button[data-testid*="baseButton"],
+    button[title],
+    a[title] {
         display: none !important;
         visibility: hidden !important;
-        height: 0 !important;
+        opacity: 0 !important;
     }
 
-    /* nút tròn Manage app */
-    button[kind="header"] {
+    /* Xóa tất cả phần tử fixed góc dưới phải */
+    div[style*="position: fixed"],
+    div[style*="position:fixed"] {
         display: none !important;
     }
 
-    /* icon nổi góc dưới phải */
-    div[class*="viewerBadge"],
-    div[class*="stActionButton"],
-    div[class*="Floating"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    /* footer */
-    footer {
-        display: none !important;
+    /* Xóa footer/header */
+    footer, header {
+        display:none !important;
     }
     }
     /* Ẩn thanh toolbar Streamlit trên cùng */
