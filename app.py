@@ -10,8 +10,8 @@ import io
 
 # Cấu hình giao diện ứng dụng (phải nằm trước mọi lệnh st.)
 st.set_page_config(
-    page_title="Quản Lý Hoa - Tên Hội",
-    page_icon="🔒",
+    page_title="Quản Lý Hoa Hội",
+    page_icon="🌸",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
