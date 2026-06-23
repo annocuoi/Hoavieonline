@@ -24,29 +24,34 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Ẩn icon Deploy / Github góc dưới phải */
-    .stAppDeployButton {
+    /* Xóa toàn bộ icon góc phải dưới Streamlit */
+    [data-testid="stDecoration"],
+    [data-testid="stStatusWidget"],
+    [data-testid="stToolbar"],
+    [data-testid="stHeader"],
+    [data-testid="stMainMenu"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+    }
+
+    /* nút tròn Manage app */
+    button[kind="header"] {
         display: none !important;
     }
 
-    /* Ẩn menu + icon phụ góc dưới */
-    [data-testid="stToolbar"] {
+    /* icon nổi góc dưới phải */
+    div[class*="viewerBadge"],
+    div[class*="stActionButton"],
+    div[class*="Floating"] {
         display: none !important;
+        visibility: hidden !important;
     }
 
-    /* Ẩn icon chạy app / manage app */
-    [data-testid="stStatusWidget"] {
-        display: none !important;
-    }
-
-    /* Ẩn footer Streamlit */
+    /* footer */
     footer {
-        visibility: hidden !important;
+        display: none !important;
     }
-
-    /* Ẩn header Streamlit */
-    header {
-        visibility: hidden !important;
     }
     /* Ẩn thanh toolbar Streamlit trên cùng */
     [data-testid="stToolbar"] {
