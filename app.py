@@ -1570,17 +1570,14 @@ if st.session_state.quyen != "admin":
 
 
         bang_xep_hang.sort(
-            bang_xep_hang.sort(
-                key=lambda x: (
-                    x["🌺"],
-                    x["🔴"],
-                    x["🟠"],
-                    x["🟣"],
-                    x["🔵"],
-                    x["🟢"]
-                ),
-                reverse=True
-            )
+            key=lambda x: (
+                x["🌸"],   # tổng hoa
+                x["🔴"],
+                x["🟠"],
+                x["🟣"],
+                x["🔵"],
+                x["🟢"]
+            ),
             reverse=True
         )
 
