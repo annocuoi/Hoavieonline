@@ -24,18 +24,28 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    div[data-testid="stToolbar"],
-    div[data-testid="stDecoration"],
-    div[data-testid="stStatusWidget"],
-    .stDeployButton,
+    /* Ẩn Streamlit Cloud badge dưới góc phải */
+    [data-testid="stAppDeployButton"] {
+        display:none !important;
+    }
+
+    .st-emotion-cache-1wbqy5l,
+    .st-emotion-cache-1avcm0n,
+    .st-emotion-cache-14xtw13,
     .viewerBadge_container__1QSob,
     .viewerBadge_link__1S137 {
         display:none !important;
     }
 
-    iframe {
+    /* chặn thanh fixed dưới cùng */
+    div[class*="viewerBadge"] {
         display:none !important;
     }
+
+    /* mobile + desktop */
+    div[style*="bottom: 0"],
+    div[style*="bottom:0"] {
+        display:none !important;
     }
     /* Ẩn thanh toolbar Streamlit trên cùng */
     [data-testid="stToolbar"] {
