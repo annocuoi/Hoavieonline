@@ -1571,12 +1571,12 @@ if st.session_state.quyen != "admin":
 
         bang_xep_hang.sort(
             key=lambda x: (
-                x["tong"],        # tổng hoa trước
-                x["do"],          # đỏ
-                x["cam"],         # cam
-                x["tim"],         # tím
-                x["xanh_duong"],  # xanh dương
-                x["xanh_lam"]     # xanh lam
+                x["tong"],                 # tổng hoa trước
+                x["cap"]["Đỏ"],            # bằng tổng xét đỏ
+                x["cap"]["Cam"],           # rồi cam
+                x["cap"]["Tím"],           # rồi tím
+                x["cap"]["Xanh dương"],    # xanh dương
+                x["cap"]["Xanh lá"]        # xanh lá
             ),
             reverse=True
         )
