@@ -2,6 +2,7 @@ import json
 import base64
 import requests
 import streamlit as st # type: ignore
+import streamlit.components.v1 as components
 import time
 from PIL import Image
 from datetime import datetime
