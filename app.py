@@ -1377,7 +1377,7 @@ if st.session_state.quyen == "hoi":
     with tab_hoi_vien:
 
         st.markdown(
-            "<h3>👥 2. Hội Viên & Cấp Phát</h3>",
+            "<h3>👥 2. Hội Viên & Thêm Hoa Hội Viên</h3>",
             unsafe_allow_html=True
         )
 
