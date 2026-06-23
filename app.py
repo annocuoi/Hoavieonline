@@ -24,31 +24,16 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    iframe {
+    div[data-testid="stToolbar"],
+    div[data-testid="stDecoration"],
+    div[data-testid="stStatusWidget"],
+    .stDeployButton,
+    .viewerBadge_container__1QSob,
+    .viewerBadge_link__1S137 {
         display:none !important;
     }
-    /* Xóa nút đỏ + nút tròn góc dưới mobile Streamlit */
-    div[data-testid="stBottomBlockContainer"],
-    div[data-testid="stFloatingActionButton"],
-    div[data-testid="stAppToolbar"],
-    div[data-testid="stElementToolbar"],
-    div[data-testid="stBaseButton-secondary"],
-    button[data-testid*="baseButton"],
-    button[title],
-    a[title] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-    }
 
-    /* Xóa tất cả phần tử fixed góc dưới phải */
-    div[style*="position: fixed"],
-    div[style*="position:fixed"] {
-        display: none !important;
-    }
-
-    /* Xóa footer/header */
-    footer, header {
+    iframe {
         display:none !important;
     }
     }
