@@ -1550,25 +1550,56 @@ if st.session_state.quyen == "hoi":
 
                             cap = thong_tin.get("cap")
 
-                            icon = {
-                                "Đỏ":"🔴",
-                                "Cam":"🟠",
-                                "Tím":"🟣",
-                                "Xanh dương":"🔵",
-                                "Xanh lá":"🟢"
-                            }.get(cap,"")
 
-                            tick = st.checkbox(
-                                "",
-                                value=hoa in st.session_state.hoa_dang_chon,
-                                key=f"chon_{tv_chon}_{hoa}"
+                            mau_chu = {
+
+                                "Đỏ": "#d60000",
+                                "Cam": "#ff6600",
+                                "Tím": "#8e44ad",
+                                "Xanh dương": "#005eff",
+                                "Xanh lá": "#009900"
+
+                            }.get(cap,"black")
+
+
+                            cot_tick, cot_chu = st.columns(
+                                [0.25,3]
                             )
 
+
+                            with cot_tick:
+
+                                tick = st.checkbox(
+                                    "",
+                                    value=hoa in st.session_state.hoa_dang_chon,
+                                    key=f"chon_{tv_chon}_{hoa}"
+                                )
+
+
+                            with cot_chu:
+
+                                st.markdown(
+                                    f"""
+                                    <div style="
+                                        color:{mau_chu};
+                                        font-weight:700;
+                                        font-size:16px;
+                                        padding-top:6px;
+                                    ">
+                                    {hoa}
+                                    </div>
+                                    """,
+                                    unsafe_allow_html=True
+                                )
+
+
                             if tick:
+
                                 if hoa not in st.session_state.hoa_dang_chon:
                                     st.session_state.hoa_dang_chon.append(hoa)
 
                             else:
+
                                 if hoa in st.session_state.hoa_dang_chon:
                                     st.session_state.hoa_dang_chon.remove(hoa)
                 # =====================
