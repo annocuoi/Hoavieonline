@@ -1570,27 +1570,60 @@ if st.session_state.quyen == "hoi":
                             with cot_tick:
 
                                 tick = st.checkbox(
-                                    "",
-                                    value=hoa in st.session_state.hoa_dang_chon,
-                                    key=f"chon_{tv_chon}_{hoa}"
-                                )
+                                "",
+                                value=hoa in st.session_state.hoa_dang_chon,
+                                key=f"chon_{tv_chon}_{hoa}"
+                            )
 
 
-                            with cot_chu:
+                            st.markdown(
+                                f"""
+                                <style>
+                                div[data-testid="stCheckbox"] {{
+                                    display:inline-block;
+                                }}
+                                </style>
 
-                                st.markdown(
-                                    f"""
-                                    <div style="
-                                        color:{mau_chu};
-                                        font-weight:700;
-                                        font-size:16px;
-                                        padding-top:6px;
-                                    ">
+                                <div style="
+                                    margin-top:-42px;
+                                    margin-left:35px;
+                                    color:{mau_chu};
+                                    font-weight:700;
+                                    font-size:16px;
+                                    white-space:nowrap;
+                                ">
                                     {hoa}
-                                    </div>
-                                    """,
-                                    unsafe_allow_html=True
-                                )
+                                </div>
+                                """,
+                                unsafe_allow_html=True
+                            )
+
+
+                            tick = st.checkbox(
+                                "",
+                                value=hoa in st.session_state.hoa_dang_chon,
+                                key=f"chon_{tv_chon}_{hoa}"
+                            )
+
+
+                            st.markdown(
+                                f"""
+                                <div style="
+                                    margin-top:-42px;
+                                    margin-left:35px;
+
+                                    color:{mau_chu};
+
+                                    font-weight:700;
+                                    font-size:16px;
+
+                                    white-space:nowrap;
+                                ">
+                                    {hoa}
+                                </div>
+                                """,
+                                unsafe_allow_html=True
+                            )
 
 
                             if tick:
