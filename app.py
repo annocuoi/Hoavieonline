@@ -1536,7 +1536,7 @@ if st.session_state.quyen == "hoi":
 
                     cols = st.columns(4)
                     if "hoa_dang_chon" not in st.session_state:
-                    st.session_state.hoa_dang_chon = []
+                        st.session_state.hoa_dang_chon = []
 
                     for i, hoa in enumerate(danh_sach_hoa):
 
