@@ -1407,11 +1407,20 @@ if st.session_state.quyen == "hoi":
                 ):
                     ten_tv_clean = ten_tv_moi.strip()
 
-                    if ten_tv_clean:
+                    if ten_tv_clean == "":
+                        st.warning("⚠️ Vui lòng nhập tên hội viên")
+
+                    elif ten_tv_clean.lower() in [
+                        x.lower() for x in du_lieu_hoi_dang_dung.keys()
+                    ]:
+                        st.error("❌ Hội viên đã tồn tại")
+
+                    else:
                         du_lieu_hoi_dang_dung[ten_tv_clean] = []
 
                         if luu_du_lieu():
                             st.session_state.key_them_tv += 1
+                            st.success("✅ Đã thêm hội viên")
                             st.rerun()
                 danh_sach_tv_that = [
                     x for x in du_lieu_hoi_dang_dung.keys()
