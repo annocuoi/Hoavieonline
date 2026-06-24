@@ -84,6 +84,10 @@ st.markdown(
         color:#000000;
         white-space:nowrap;
     }
+    /* Ẩn thanh công cụ dataframe */
+    div[data-testid="stElementToolbar"] {
+        display: none;
+    }
 
 
     /* icon hoa tự co */
@@ -326,6 +330,7 @@ html, body{
     font-size:10px;
 }
 
+
 </style>
 """
 def anh_html(data):
@@ -398,8 +403,8 @@ if "GITHUB_TOKEN" in st.secrets:
 else:
     GITHUB_TOKEN = ""
 
-REPO_NAME = "annocuoi/Hoa-vien-online"
-FILE_PATH = "du_lieu_hoa1.json"
+REPO_NAME = "annocuoi/test12"
+FILE_PATH = "du_lieu_chung.json"
 BRANCH = "main"
 
 HEADERS = {
