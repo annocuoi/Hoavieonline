@@ -2592,21 +2592,19 @@ if st.session_state.quyen == "hoi":
 
         else:
 
-            if "reset_tk_xem" in st.session_state:
-                st.session_state.tk_xem = ""
-                st.session_state.mk_xem = ""
-                del st.session_state.reset_tk_xem
+            if "key_tk_xem" not in st.session_state:
+                st.session_state.key_tk_xem = 0
 
 
             tk_xem = st.text_input(
                 "Tên đăng nhập xem",
-                key="tk_xem"
+                key=f"tk_xem_{st.session_state.key_tk_xem}"
             )
 
             mk_xem = st.text_input(
                 "Mật khẩu",
                 type="password",
-                key="mk_xem"
+                key=f"mk_xem_{st.session_state.key_tk_xem}"
             )
 
 
@@ -2655,7 +2653,7 @@ if st.session_state.quyen == "hoi":
                         du_lieu_hoi_dang_dung
                     ):
 
-                        st.session_state.reset_tk_xem = True
+                        st.session_state.key_tk_xem += 1
 
                         st.session_state.force_reload = True
 
