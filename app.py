@@ -7,7 +7,6 @@ import time
 from PIL import Image
 from datetime import datetime
 import io
-from streamlit_local_storage import LocalStorage
 
 # Cấu hình giao diện ứng dụng (phải nằm trước mọi lệnh st.)
 st.set_page_config(
@@ -21,7 +20,6 @@ st.set_page_config(
         "About": None
     }
 )
-storage = LocalStorage()
 st.markdown(
     """
     <style>
@@ -519,68 +517,16 @@ def doc_du_lieu_hoi(ten_hoi):
         return {}
 
 if not st.session_state.da_dang_nhap:
-    st.markdown(
-    """
-    <div style='
-        text-align:center;
-        margin-top:30px;
-        margin-bottom:25px;
-    '>
 
-    <div style='
-        font-size:clamp(24px,5vw,42px);
-        font-weight:900;
-        white-space:nowrap;
-    '>
-    🌸 QUẢN LÝ HOA HỘI 🌸
-    </div>
-
-    <div style='
-        font-size:clamp(12px,3vw,18px);
-        font-weight:700;
-        white-space:nowrap;
-    '>
-    🌺 Bộ sưu tập • Hội viên • Xếp hạng 🌺
-    </div>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
-    # nhớ tài khoản theo trình duyệt
-    tk_luu = storage.getItem(
-        "nho_tai_khoan_login",
-    ) or ""
-
-
-    mk_luu = storage.getItem(
-        "nho_mat_khau_login",
-    ) or ""
     ten_dang_nhap = st.text_input(
         "Tài khoản",
-        value=tk_luu,
-        placeholder="Nhập tài khoản.."
+        placeholder="Nhập tài khoản..."
     )
 
     mat_khau_nhap = st.text_input(
         "Mật khẩu",
-        value=mk_luu,
         type="password",
         placeholder="Nhập mật khẩu..."
-    )
-    tick_luu = storage.getItem(
-        "nho_tick_login"
-    )
-
-    if tick_luu == "1":
-        tick_mac_dinh = True
-    else:
-        tick_mac_dinh = False
-
-
-    nho_dang_nhap = st.checkbox(
-        "💾 Nhớ tài khoản và mật khẩu",
-        value=tick_mac_dinh
     )
 
 
@@ -641,54 +587,6 @@ if not st.session_state.da_dang_nhap:
 
 
         if dang_nhap_ok:
-
-
-            # =====================
-            # NHỚ ĐĂNG NHẬP MÁY NÀY
-            # =====================
-
-            if nho_dang_nhap:
-
-                storage.setItem(
-                    "nho_tick_login",
-                    "1",
-                    key="luu_tick_login"
-                )
-
-                storage.setItem(
-                    "nho_tai_khoan_login",
-                    ten_dang_nhap,
-                    key="luu_tk_login"
-                )
-
-                storage.setItem(
-                    "nho_mat_khau_login",
-                    mat_khau_nhap,
-                    key="luu_mk_login"
-                )
-
-
-            else:
-
-                storage.setItem(
-                    "nho_tick_login",
-                    "0",
-                    key="bo_tick_login"
-                )
-
-                storage.deleteItem(
-                    "nho_tai_khoan_login",
-                    key="xoa_tk_login"
-                )
-
-                storage.deleteItem(
-                    "nho_mat_khau_login",
-                    key="xoa_mk_login"
-                )
-
-
-            time.sleep(1)
-
 
             st.session_state.da_dang_nhap = True
             st.session_state.quyen = quyen_login
@@ -2896,11 +2794,6 @@ if st.session_state.quyen == "hoi":
                         st.rerun()
 
         else:
-            if "reset_tk_xem" in st.session_state:
-
-                st.session_state.key_tk_xem += 1
-
-                del st.session_state.reset_tk_xem
 
             if "key_tk_xem" not in st.session_state:
                 st.session_state.key_tk_xem = 0
@@ -2963,7 +2856,7 @@ if st.session_state.quyen == "hoi":
                         du_lieu_hoi_dang_dung
                     ):
 
-                        st.session_state.reset_tk_xem = True
+                        st.session_state.key_tk_xem += 1
 
                         st.session_state.force_reload = True
 
