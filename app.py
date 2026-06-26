@@ -676,16 +676,14 @@ if not st.session_state.da_dang_nhap:
                     key="bo_tick_login"
                 )
 
-                storage.deleteItem(
-                    "nho_tai_khoan_login",
-                    key="xoa_tk_login"
-                )
-
-                storage.deleteItem(
-                    "nho_mat_khau_login",
-                    key="xoa_mk_login"
-                )
-
+                try:
+                    if storage.getItem("nho_tai_khoan_login"):
+                        storage.deleteItem("nho_tai_khoan_login", key="xoa_tk_login")
+                    if storage.getItem("nho_mat_khau_login"):
+                        storage.deleteItem("nho_mat_khau_login", key="xoa_mk_login")
+                except Exception:
+                    # Bỏ qua lỗi nếu key không tồn tại hoặc đã bị xóa
+                    pass
 
             time.sleep(1)
 
@@ -1574,46 +1572,50 @@ if st.session_state.quyen == "hoi":
                         dem_cap[cap] += 1
 
 
-
+                st.markdown("""
+                <div style="
+                    font-size:22px;
+                    font-weight:700;
+                    color:#222;
+                    margin-top:0;
+                    margin-bottom:6px;
+                ">
+                🌈 Chọn màu hoa để hiển thị danh sách
+                </div>
+                """, unsafe_allow_html=True)
                 mau_chon = st.radio(
-                    "🌈 Loại hoa: (Số đếm kế bên là số lượng hoa mà hv chưa có)",
+                    "",
                     [
-                        f"🌸 Tất cả: {len(danh_sach_hoa_goc)}",
-                        f"🔴 Đỏ: {dem_cap['Đỏ']}",
-                        f"🟠 Cam: {dem_cap['Cam']}",
-                        f"🟣 Tím: {dem_cap['Tím']}",
-                        f"🔵 Xanh dương: {dem_cap['Xanh dương']}",
-                        f"🟢 Xanh lá: {dem_cap['Xanh lá']}"
+                        "🔴 Đỏ",
+                        "🟠 Cam",
+                        "🟣 Tím",
+                        "🔵 Xanh dương",
+                        "🟢 Xanh lá",
                     ],
                     horizontal=True,
+                    index=0,
+                    label_visibility="collapsed",
                     key="loc_mau_cap_hoa"
                 )
-
                 danh_sach_hoa = danh_sach_hoa_goc.copy()
 
 
-                if "Tất cả" not in mau_chon:
-
+                if mau_chon:
 
                     ten_mau = (
                         mau_chon
-                        .split(":")[0]
-                        .replace("🔴 ","")
-                        .replace("🟠 ","")
-                        .replace("🟣 ","")
-                        .replace("🔵 ","")
-                        .replace("🟢 ","")
+                        .replace("🔴 ", "")
+                        .replace("🟠 ", "")
+                        .replace("🟣 ", "")
+                        .replace("🔵 ", "")
+                        .replace("🟢 ", "")
                     )
 
-
                     danh_sach_hoa = [
-
                         hoa for hoa in danh_sach_hoa
-
                         if st.session_state.kho_hoa_tong
-                        .get(hoa,{})
-                        .get("cap") == ten_mau
-
+                            .get(hoa, {})
+                            .get("cap") == ten_mau
                     ]
                     # giữ danh sách gốc
                     danh_sach_hoa_goc = danh_sach_hoa.copy()
@@ -1632,10 +1634,39 @@ if st.session_state.quyen == "hoi":
                             if tim_hoa.lower().strip()
                             in hoa.lower()
                         ]
+                cot1, cot2 = st.columns(2)
 
+                with cot1:
+                    bam_hoan_thanh = st.button(
+                        "🌺 Hoàn thành",
+                        use_container_width=True,
+                        key="hoan_thanh_tren"
+                    )
+
+                with cot2:
+                    bo_chon_tat_ca = st.button(
+                        "❎ Bỏ chọn",
+                        use_container_width=True,
+                        key="bo_chon_tat_ca"
+                    )
 
                 st.markdown("### 🌸 Chọn hoa")
 
+                thong_bao = st.empty()
+
+                if "thong_bao" in st.session_state:
+                    thong_bao.success(st.session_state.thong_bao)
+                    del st.session_state.thong_bao
+                if bo_chon_tat_ca:
+
+                    st.session_state.hoa_dang_chon = []
+
+                    for hoa in danh_sach_hoa:
+                        key = f"capnhanh_{tv_chon}_{hoa}"
+                        if key in st.session_state:
+                            st.session_state[key] = False
+
+                    st.rerun()
 
                 hoa_chon = []
 
@@ -1712,18 +1743,13 @@ if st.session_state.quyen == "hoi":
                 # =====================
 
 
-                if st.button(
-                    "🌺 Hoàn thành",
-                    use_container_width=True
-                ):
+                if bam_hoan_thanh:
 
 
-                    if len(st.session_state.hoa_dang_chon) == 0:
+                    if not st.session_state.hoa_dang_chon:
 
 
-                        st.warning(
-                            "⚠️ Chưa chọn hoa"
-                        )
+                        thong_bao.warning("⚠️ Chưa chọn hoa")
 
 
                     else:
@@ -1743,11 +1769,9 @@ if st.session_state.quyen == "hoi":
 
                             so_hoa = len(st.session_state.hoa_dang_chon)
 
-                            st.success(
+                            st.session_state.thong_bao = (
                                 f"✅ Đã thêm {so_hoa} hoa cho {tv_chon}"
                             )
-
-
                             # =====================
                             # XÓA TICK SAU KHI LƯU
                             # =====================
